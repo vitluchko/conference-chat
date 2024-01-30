@@ -1,6 +1,6 @@
 # Conference Chat
 
-![image](https://github.com/vitluchko/conference-chat/assets/98816838/48eefdd5-adf8-4b7a-916e-f4e3612bbcad)
+![image](https://github.com/vitluchko/conference-chat/assets/98816838/8abd120d-f98f-4b70-b687-7489ea61b2f9)
 
 
 ## Table of Contents
