@@ -1,5 +1,8 @@
 # Conference Chat
 
+![image](https://github.com/vitluchko/conference-chat/assets/98816838/48eefdd5-adf8-4b7a-916e-f4e3612bbcad)
+
+
 ## Table of Contents
 1. [Login/Register](#loginregister-forms)
 2. [Main Page](#main-page)
