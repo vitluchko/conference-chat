@@ -27,10 +27,10 @@ class LoginController extends Controller
                 'email' => trans('auth.failed')
             ]);
         }
-
+        
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(RouteServiceProvider::DASHBOARD);
     }
 
     public function destroy(Request $request)
