@@ -1,5 +1,5 @@
 <div class="sidebar w-[3.73rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg">
-    <div class="flex h-screen flex-col justify-between pt-3 pb-6">
+    <div class="flex h-screen flex-col justify-between pb-6">
         <div>
             <div class="relative flex items-center space-x-4 bg-gradient-to-br from-teal-400 to-cyan-500 p-4 to-sky-200 px-4 py-3 text-white">
                 <img src="https://i.ibb.co/VwtYfT6/logo.png" class="h-auto max-w-full" style="width: 30px; height: auto;">
