@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Providers\RouteServiceProvider;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -13,7 +16,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard')
+            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
     }
 
     /**
@@ -23,7 +27,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.post.create');
     }
 
     /**
@@ -34,29 +38,62 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'category' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+        ]);
+
+        $slug = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
+
+        $newImageName = uniqid() . '-' . $slug . '.' .
+            $request->image->extension();
+
+        $request->image->move(public_path('images'), $newImageName);
+
+        Post::create([
+            'category' => $validatedData['category'],
+            'title' => $validatedData['title'],
+            'slug' => $slug,
+            'image_path' => $newImageName,
+            'description' => $validatedData['description'],
+            'user_id' => auth()->id()
+        ]);
+
+        return redirect(RouteServiceProvider::DASHBOARD);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
+     * @param string $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $slug)
     {
-        //
+        $post = Post::where('id', $id)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('layouts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param string $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $slug)
     {
-        //
+        $post = Post::where('id', $id)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('admin.post.edit', compact('post'));
     }
 
     /**
@@ -68,8 +105,40 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'category' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'image|mimes:jpg,png,jpeg|max:5048'
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        $slug = SlugService::createSlug(Post::class, 'slug', $validatedData['title']);
+
+        if ($request->hasFile('image')) {
+            $newImageName = uniqid() . '-' . $slug . '.' .
+                $request->image->extension();
+
+            $request->image->move(public_path('images'), $newImageName);
+
+            if ($post->image_path && file_exists(public_path('images/' . $post->image_path))) {
+                unlink(public_path('images/' . $post->image_path));
+            }
+
+            $post->image_path = $newImageName;
+        }
+
+        $post->category = $validatedData['category'];
+        $post->title = $validatedData['title'];
+        $post->slug = $slug;
+        $post->description = $validatedData['description'];
+        $post->user_id = auth()->id();
+        $post->save();
+
+        return redirect(RouteServiceProvider::DASHBOARD);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +148,14 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        if ($post->image_path && file_exists(public_path('images/' . $post->image_path))) {
+            unlink(public_path('images/' . $post->image_path));
+        }
+
+        $post->delete();
+
+        return redirect(RouteServiceProvider::DASHBOARD);
     }
 }
