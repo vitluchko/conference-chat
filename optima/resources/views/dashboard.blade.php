@@ -9,12 +9,12 @@
     <title>optima</title>
 </head>
 
-<body>
+<body class="w-[calc(100%-3.73rem)] ml-auto">
     <aside class="fixed left-0 top-0 z-10 h-screen w-[calc(3.73rem)]">
         @include('layouts.navbar')
     </aside>
 
-    <main class="w-[calc(100%-3.73rem)] ml-auto">
+    <main>
         <div class="2xl:container mx-auto space-y-6">
             <div class="h-16 border-b border-gray-300 dark:border-gray-700">
                 <span class="flex justify-center text-sky-700 dark:text-gray-200">Header</span>
@@ -28,7 +28,7 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
                 @foreach ($posts as $post)
-                @include('layouts.post')
+                @include('dashboard.post')
                 <div class="pt-15 w-4/5 m-auto flex justify-between items-center">
                     <a href="{{ route('post.edit', ['id' => $post->id, 'slug' => $post->slug]) }}" class="text-blue-500 hover:underline">
                         Edit post
@@ -44,6 +44,8 @@
             </div>
         </div>
     </main>
+
+    @include('layouts.footer')
 </body>
 
 </html>

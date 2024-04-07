@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ConferencesController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,3 +48,5 @@ Route::put('/post/edit/{id}', [PostsController::class, 'update'])->middleware('a
 
 Route::delete('/post/delete/{id}', [PostsController::class, 'destroy'])->middleware('auth')->name('post.delete');
 
+
+Route::get('/conference', [ConferencesController::class, 'index'])->middleware('auth')->name('conference');

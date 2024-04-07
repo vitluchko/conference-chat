@@ -14,7 +14,7 @@ class ResetPasswordController extends Controller
     {
         return view('auth.reset-password', ['request' => $request]);
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
