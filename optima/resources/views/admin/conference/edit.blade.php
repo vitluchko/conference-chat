@@ -12,7 +12,7 @@
 <div class="w-4/5 m-auto text-left">
     <div class="py-15">
         <h1 class="text-6xl">
-            Create Conference
+            Edit Conference
         </h1>
     </div>
 </div>
@@ -30,19 +30,23 @@
 @endif
 
 <div class="w-4/5 m-auto pt-20">
-    <form action="/conference/create" method="POST" enctype="multipart/form-data">
+    <form action="/conference/edit/{{ $conference->id }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
-        <input type="text" name="title" placeholder="Title..." class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
+        <input type="text" name="title" value="{{ $conference->title }}" class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
 
-        <input type="date" name="start_date" placeholder="Start Date..." class="mt-5 bg-transparent block border-b-2 w-full h-16 text-lg outline-none">
+        <input type="date" name="start_date" value="{{ $conference->start_date }}" class="mt-5 bg-transparent block border-b-2 w-full h-16 text-lg outline-none">
 
-        <input type="date" name="end_date" placeholder="End Date..." class="mt-5 bg-transparent block border-b-2 w-full h-16 text-lg outline-none">
+        <input type="date" name="end_date" value="{{ $conference->end_date }}" class="mt-5 bg-transparent block border-b-2 w-full h-16 text-lg outline-none">
 
-        <textarea name="description" placeholder="Description..." class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none"></textarea>
+
+        <textarea name="description" placeholder="Description..." class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none">
+        {{ $conference->description }}
+        </textarea>
 
         <button type="submit" class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
-            Submit Post
+            Update Conference
         </button>
     </form>
 </div>

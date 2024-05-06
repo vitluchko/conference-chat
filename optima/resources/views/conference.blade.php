@@ -27,14 +27,17 @@
         @keyframes switchColors {
             0% {
                 color: black;
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             }
 
             50% {
                 color: white;
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             }
 
             100% {
                 color: black;
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             }
         }
 
@@ -62,11 +65,16 @@
 </head>
 
 <body class="w-[calc(100%-3.73rem)] ml-auto">
+    <div class="m-3">
+        <a href="{{ route('conference.admin') }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 text-lime-600 hover:text-lime-900">
+            Conference Tools
+        </a>
+    </div>
     <aside class="fixed left-0 top-0 z-10 h-screen w-[calc(3.73rem)]">
         @include('layouts.navbar')
     </aside>
 
-    <header >
+    <header>
         <h1 class="font-bold text-center text-3xl switch-color-animation">{{ $activeConference->title }}</h1>
         <p class="switch-color-animation">Welcome to the future of technology</p>
     </header>
@@ -95,10 +103,16 @@
 
                 @foreach($topics as $topic)
                 <div class="card bg-gradient-to-br from-teal-100 to-sky-200">
-                    <img src="conference-images/register.jpg" alt="Topic 1 Image">
-                    <div class="p-6">
-                        <h3>{{ $topic->name }}</h3>
-                        <p class="text-justify">{{ $topic->description }}</p>
+                    <div class="flex">
+                        <div class="p-6">
+                            <div class="w-24 h-24 rounded-full overflow-hidden shadow-lg">
+                                <img class="object-cover w-full h-full" src="{{ asset('images/topics/' . $topic->image_path) }}" alt="Topic Image">
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3>{{ $topic->name }}</h3>
+                            <p class="text-justify">{{ $topic->description }}</p>
+                        </div>
                     </div>
                 </div>
                 @endforeach
