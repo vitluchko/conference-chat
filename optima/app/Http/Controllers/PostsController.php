@@ -77,7 +77,7 @@ class PostsController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('layouts.show', compact('post'));
+        return view('dashboard.show', compact('post'));
     }
 
     /**
