@@ -71,7 +71,7 @@
     </table>
 
     <div class="mt-4 flex justify-between px-6">
-        <a href="{{ route('topic.create', ['id' => $conference_id]) }}" class="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50 ml-1 font-bold">Create Topic</a>
+        <a href="{{ route('topic.create', ['conference_id' => $conference_id]) }}" class="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50 ml-1 font-bold">Create Topic</a>
         <a href="{{ route('conference.admin') }}" class="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50">
             <svg fill="none" viewBox="0 0 22 22" stroke="currentColor" class="h-5 w-5">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18">

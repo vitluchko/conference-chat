@@ -59,7 +59,7 @@ class SchedulesController extends Controller
             'conference_id' => $request->conference_id,
         ]);
 
-        return redirect()->route('schedule', ['id' => $request->conference_id]);
+        return redirect()->route('schedule.index', ['conference_id' => $request->conference_id]);
     }
 
     /**
@@ -98,8 +98,8 @@ class SchedulesController extends Controller
     {
         $validatedData = Validator::make($request->all(), [
             'event' => 'required',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
         ]);
 
         if ($validatedData->fails()) {
@@ -117,7 +117,7 @@ class SchedulesController extends Controller
             'conference_id' => $request->conference_id,
         ]);
 
-        return redirect()->route('topic', ['id' => $request->conference_id]);
+        return redirect()->route('schedule.index', ['conference_id' => $request->conference_id]);
     }
 
     /**

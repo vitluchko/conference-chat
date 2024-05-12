@@ -30,8 +30,9 @@
 @endif
 
 <div class="w-4/5 m-auto pt-20">
-    <form action="/schedule/create" method="POST" enctype="multipart/form-data">
+    <form action="/schedule/edit/{{ $schedule->id }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
         <input type="text" name="event" value="{{ $schedule->event }}" placeholder="Event..." class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
 

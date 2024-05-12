@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li class="min-w-max">
-                    <a href="#" class="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                    <a href="{{ route('user.index') }}" class="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path class="stroke-current group-hover:text-sky-600" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                             <circle class="stroke-current group-hover:text-sky-600" cx="9" cy="7" r="4" />
@@ -47,6 +47,7 @@
                         <span class="group-hover:text-sky-400">Participant</span>
                     </a>
                 </li>
+                @if(auth()->user()->role_id == 2)
                 <li class="min-w-max">
                     <a href="#" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
                         <svg class="h-7 w-7" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
@@ -61,6 +62,7 @@
                         <span class="group-hover:text-sky-400">Admin</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
         <div class="w-max -mb-3">

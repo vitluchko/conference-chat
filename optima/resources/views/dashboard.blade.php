@@ -26,24 +26,34 @@
                 </div>
                 @endif
             </div>
+            <div class="text-center">
+                <p class="mt-2 text-xl md:text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    News
+                </p>
+                <p class="mt-4 max-w-2xl text-lg md:text-base text-gray-500 lg:mx-auto">
+                    Explore the latest updates and insights from our conference
+                </p>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
                 @foreach ($posts as $post)
                 @include('dashboard.post')
-                <div class="pt-15 w-4/5 m-auto flex justify-between items-center">
-                    <a href="{{ route('post.edit', ['id' => $post->id, 'slug' => $post->slug]) }}" class="text-blue-500 hover:underline">
-                        Edit post
-                    </a>
-                    <form action="{{ route('post.delete', ['id' => $post->id]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
+                <!-- <div class="pt-15 w-4/5 m-auto flex justify-between items-center">
+                        <a href="{{ route('post.edit', ['id' => $post->id, 'slug' => $post->slug]) }}" class="text-blue-500 hover:underline">
+                            Edit post
+                        </a>
+                        <form action="{{ route('post.delete', ['id' => $post->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
 
-                        <button type="submit" class="text-red-500 hover:underline">Delete</button>
-                    </form>
-                </div>
+                            <button type="submit" class="text-red-500 hover:underline">Delete</button>
+                        </form>
+                    </div> -->
                 @endforeach
             </div>
         </div>
     </main>
+
+    @include('dashboard.contacts')
 
     @include('layouts.footer')
 </body>

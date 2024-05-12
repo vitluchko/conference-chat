@@ -68,7 +68,9 @@ class TopicsController extends Controller
             'conference_id' => $request->conference_id,
         ]);
 
-        return redirect()->route('topic', ['id' => $request->conference_id]);
+        $conference_id = $request->conference_id;
+
+        return redirect()->route('topic.index', ['conference_id' => $conference_id]);
     }
 
     /**
@@ -91,9 +93,9 @@ class TopicsController extends Controller
     public function edit($id)
     {
         $topic = Topic::where('id', $id)
-        ->firstOrFail();
+            ->firstOrFail();
 
-    return view('admin.topic.edit', compact('topic'));
+        return view('admin.topic.edit', compact('topic'));
     }
 
     /**
@@ -139,7 +141,7 @@ class TopicsController extends Controller
         $topic->description = $request->description;
         $topic->save();
 
-        return redirect()->route('topic', ['id' => $request->conference_id]);
+        return redirect()->route('topic.index', ['conference_id' => $request->conference_id]);
     }
 
     /**

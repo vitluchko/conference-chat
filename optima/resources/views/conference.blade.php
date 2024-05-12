@@ -65,11 +65,13 @@
 </head>
 
 <body class="w-[calc(100%-3.73rem)] ml-auto">
+    @if(auth()->user()->role_id == 2)
     <div class="m-3">
         <a href="{{ route('conference.admin') }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 text-lime-600 hover:text-lime-900">
             Conference Tools
         </a>
     </div>
+    @endif
     <aside class="fixed left-0 top-0 z-10 h-screen w-[calc(3.73rem)]">
         @include('layouts.navbar')
     </aside>
