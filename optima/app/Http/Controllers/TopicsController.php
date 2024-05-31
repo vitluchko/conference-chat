@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conference;
 use App\Models\Topic;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
@@ -19,7 +20,9 @@ class TopicsController extends Controller
     {
         $topics = Topic::where('conference_id', $conference_id)->get();
 
-        return view('admin.topic.index', compact('topics', 'conference_id'));
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        return view('admin.topic.index', compact('topics', 'conference_id', 'isActiveConference'));
     }
 
     /**
@@ -71,17 +74,6 @@ class TopicsController extends Controller
         $conference_id = $request->conference_id;
 
         return redirect()->route('topic.index', ['conference_id' => $conference_id]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

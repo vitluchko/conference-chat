@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li class="min-w-max">
-                    <a href="{{ route('user.index') }}" class="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
+                    <a href="{{ route('profile.index') }}" class="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path class="stroke-current group-hover:text-sky-600" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                             <circle class="stroke-current group-hover:text-sky-600" cx="9" cy="7" r="4" />
@@ -29,6 +29,7 @@
                         <span class="group-hover:text-sky-400">Profile</span>
                     </a>
                 </li>
+                @if ($isActiveConference)
                 <li class="min-w-max">
                     <a href="{{ route('conference') }}" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
                         <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -39,7 +40,7 @@
                     </a>
                 </li>
                 <li class="min-w-max">
-                    <a href="#" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
+                    <a href="{{ route('participant.index') }}" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
                         <svg class="h-7 w-7" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <polyline class="stroke-current group-hover:text-sky-400" points="9 11 12 14 20 6" />
                             <path class="stroke-current group-hover:text-sky-600" d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
@@ -47,9 +48,10 @@
                         <span class="group-hover:text-sky-400">Participant</span>
                     </a>
                 </li>
+                @endif
                 @if(auth()->user()->role_id == 2)
                 <li class="min-w-max">
-                    <a href="#" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
+                    <a href="{{ route('admin.index') }}" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
                         <svg class="h-7 w-7" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <path class="group-hover:text-sky-300" d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4" />

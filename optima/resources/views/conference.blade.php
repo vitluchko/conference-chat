@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite('resources/css/app.css')
-    <title>optima</title>
+    <title>Optima</title>
+    <link rel="icon" href="https://i.ibb.co/VwtYfT6/logo.png" type="image/x-icon" />
     <style>
         body::-webkit-scrollbar {
             width: 0;
@@ -69,6 +70,9 @@
     <div class="m-3">
         <a href="{{ route('conference.admin') }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 text-lime-600 hover:text-lime-900">
             Conference Tools
+        </a>
+        <a href="{{ route('participant.admin') }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 text-lime-600 hover:text-lime-900">
+            Participant Tools
         </a>
     </div>
     @endif
@@ -153,8 +157,8 @@
             <h2 class="text-3xl font-semibold mb-6 text-center text-indigo-300">Registration</h2>
             <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden bg-gradient-to-br from-indigo-200 to-cyan-200">
                 <div class="p-6 text-center">
-                    <p class="text-lg text-gray-700 mb-8">Registration is open! <a href="#" class="text-blue-500 hover:underline">Click here to register</a>.</p>
-                    <a href="https://example.com/register" class="inline-block bg-sky-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">Register Now</a>
+                    <p class="text-lg text-gray-700 mb-8">Registration is open! <a href="{{ route('participant.index') }}" class="text-blue-500 hover:underline">Click here to register</a>.</p>
+                    <a href="{{ route('participant.index') }}" class="inline-block bg-sky-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">Register Now</a>
                 </div>
         </section>
     </main>

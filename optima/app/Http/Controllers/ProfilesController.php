@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conference;
+use App\Models\Participant;
 use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProfilesController extends Controller
@@ -16,41 +20,30 @@ class ProfilesController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $profile = $user->profile;
 
-        return view('profile', compact('user', 'profile'));
-    }
+        $isActiveConference = Conference::where('isActive', true)->exists();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $userParticipants = Participant::with('conference')->where('user_id', Auth::id())->get();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $conferenceCount = Participant::where('user_id', $user->id)
+            ->distinct('conference_id')
+            ->count('conference_id');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $workCount = Participant::where('user_id', $user->id)->count();
+
+        $lastConferenceDate = Participant::where('user_id', $user->id)
+            ->join('conferences', 'participants.conference_id', '=', 'conferences.id')
+            ->orderBy('conferences.start_date', 'desc')
+            ->value('conferences.start_date');
+
+        return view('profile', compact(
+            'user',
+            'isActiveConference',
+            'userParticipants',
+            'conferenceCount',
+            'workCount',
+            'lastConferenceDate'
+        ));
     }
 
     /**
@@ -61,7 +54,28 @@ class ProfilesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = auth()->user();
+
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        $conferenceCount = Participant::where('user_id', $user->id)
+            ->distinct('conference_id')
+            ->count('conference_id');
+
+        $workCount = Participant::where('user_id', $user->id)->count();
+
+        $lastConferenceDate = Participant::where('user_id', $user->id)
+            ->join('conferences', 'participants.conference_id', '=', 'conferences.id')
+            ->orderBy('conferences.start_date', 'desc')
+            ->value('conferences.start_date');
+
+        return view('profile.edit', compact(
+            'user',
+            'isActiveConference',
+            'conferenceCount',
+            'workCount',
+            'lastConferenceDate'
+        ));
     }
 
     /**
@@ -73,7 +87,38 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'degree' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
+        ]);
+
+        if ($validatedData->fails()) {
+            return redirect()->back()
+                ->withErrors($validatedData)
+                ->withInput();
+        }
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        list($country, $city) = explode(', ', $request->input('location'));
+
+        $user->profile()->update([
+            'degree' => $request->input('degree'),
+            'institution' => $request->input('institution'),
+            'country' => $country,
+            'city' => $city,
+        ]);
+
+        return redirect()->route('profile.index')
+            ->with('success', 'Profile updated successfully!');
     }
 
     /**

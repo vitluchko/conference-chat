@@ -23,7 +23,11 @@ class ConferencesController extends Controller
             $topics = $activeConference->topics()->get();
             $schedules = $activeConference->schedules()->get();
 
-            return view('conference', compact('activeConference', 'topics', 'schedules'));
+            $isActiveConference = Conference::where('isActive', true)->exists();
+
+            return view('conference', compact(
+                'activeConference', 'topics', 'schedules', 'isActiveConference'
+            ));
         } else {
             return redirect(RouteServiceProvider::DASHBOARD);
         }
@@ -71,17 +75,6 @@ class ConferencesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -92,7 +85,7 @@ class ConferencesController extends Controller
         $conference = Conference::where('id', $id)
             ->firstOrFail();
 
-        return view('admin.conference.edit', compact('conference'));
+        return view('admin.conference.edit', compact('conference.index'));
     }
 
     /**
@@ -161,7 +154,9 @@ class ConferencesController extends Controller
     {
         $conferences = Conference::all();
 
-        return view('admin.conference.index', compact('conferences'));
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        return view('admin.conference.index', compact('conferences', 'isActiveConference'));
     }
 
 

@@ -19,4 +19,9 @@ class Conference extends Model
     {
         return $this->hasMany(Schedule::class, 'conference_id');
     }
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class, 'conference_id');
+    }
 }
