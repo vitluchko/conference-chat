@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conference;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,9 @@ class SchedulesController extends Controller
     {
         $schedules = Schedule::where('conference_id', $conference_id)->get();
 
-        return view('admin.schedule.index', compact('schedules', 'conference_id'));
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        return view('admin.schedule.index', compact('schedules', 'conference_id', 'isActiveConference'));
     }
 
     /**
@@ -59,18 +62,7 @@ class SchedulesController extends Controller
             'conference_id' => $request->conference_id,
         ]);
 
-        return redirect()->route('schedule', ['id' => $request->conference_id]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('schedule.index', ['conference_id' => $request->conference_id]);
     }
 
     /**
@@ -98,8 +90,8 @@ class SchedulesController extends Controller
     {
         $validatedData = Validator::make($request->all(), [
             'event' => 'required',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
         ]);
 
         if ($validatedData->fails()) {
@@ -117,7 +109,7 @@ class SchedulesController extends Controller
             'conference_id' => $request->conference_id,
         ]);
 
-        return redirect()->route('topic', ['id' => $request->conference_id]);
+        return redirect()->route('schedule.index', ['conference_id' => $request->conference_id]);
     }
 
     /**

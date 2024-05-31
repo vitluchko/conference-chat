@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite('resources/css/app.css')
-    <title>optima</title>
+    <title>Optima</title>
+    <link rel="icon" href="https://i.ibb.co/VwtYfT6/logo.png" type="image/x-icon" />
 </head>
 
 <div class="w-4/5 m-auto text-left">
@@ -30,8 +31,9 @@
 @endif
 
 <div class="w-4/5 m-auto pt-20">
-    <form action="/schedule/create" method="POST" enctype="multipart/form-data">
+    <form action="/schedule/edit/{{ $schedule->id }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
         <input type="text" name="event" value="{{ $schedule->event }}" placeholder="Event..." class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
 

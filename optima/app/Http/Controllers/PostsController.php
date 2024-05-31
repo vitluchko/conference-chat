@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conference;
 use App\Models\Post;
 use App\Providers\RouteServiceProvider;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -16,8 +17,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('dashboard')
-            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        $posts = Post::orderBy('updated_at', 'DESC')->get();
+
+        return view('dashboard', compact('posts', 'isActiveConference'));
     }
 
     /**
@@ -52,7 +56,7 @@ class PostsController extends Controller
 
         $request->image->move(public_path('images'), $newImageName);
 
-        Post::create([
+        $post = Post::create([
             'category' => $validatedData['category'],
             'title' => $validatedData['title'],
             'slug' => $slug,
@@ -61,7 +65,7 @@ class PostsController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return redirect(RouteServiceProvider::DASHBOARD);
+        return redirect()->route('post.show', ['id' => $post->id, 'slug' => $slug]);
     }
 
     /**
@@ -157,5 +161,19 @@ class PostsController extends Controller
         $post->delete();
 
         return redirect(RouteServiceProvider::DASHBOARD);
+    }
+
+    /**
+     * Show table of posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAdmin()
+    {
+        $posts = Post::all();
+
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        return view('admin.post.index', compact('posts', 'isActiveConference'));
     }
 }

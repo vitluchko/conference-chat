@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite('resources/css/app.css')
-    <title>optima</title>
+    <title>Optima</title>
+    <link rel="icon" href="https://i.ibb.co/VwtYfT6/logo.png" type="image/x-icon" />
 </head>
 
 <body class="w-[calc(100%-3.73rem)] ml-auto">
@@ -84,8 +85,8 @@
                     {{ strlen($conference->description) > 20 ? substr($conference->description, 0, 20) . '...' : $conference->description }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                    <a href="{{ route('topic', ['id' => $conference->id]) }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-teal-100 text-teal-600 hover:text-teal-900">Topics</a>
-                    <a href="{{ route('schedule', ['id' => $conference->id]) }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 ml-2 text-lime-600 hover:text-lime-900">Schedules</a>
+                    <a href="{{ route('topic.index', ['conference_id' => $conference->id]) }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-teal-100 text-teal-600 hover:text-teal-900">Topics</a>
+                    <a href="{{ route('schedule.index', ['conference_id' => $conference->id]) }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-lime-100 ml-2 text-lime-600 hover:text-lime-900">Schedules</a>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap inline-flex text-center text-sm font-medium leading-5 font-semibold rounded-full">
                     <a href="{{ route('conference.edit', ['id' => $conference->id]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>

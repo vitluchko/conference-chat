@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite('resources/css/app.css')
-    <title>optima</title>
+    <title>Optima</title>
+    <link rel="icon" href="https://i.ibb.co/VwtYfT6/logo.png" type="image/x-icon" />
 </head>
 
 <body class="w-[calc(100%-3.73rem)] ml-auto">
@@ -65,7 +66,7 @@
     </table>
 
     <div class="mt-4 flex justify-between px-6">
-        <a href="{{ route('schedule.create', ['id' => $conference_id]) }}" class="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50 ml-1 font-bold">Create Schedule</a>
+        <a href="{{ route('schedule.create', ['conference_id' => $conference_id]) }}" class="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50 ml-1 font-bold">Create Schedule</a>
         <a href="{{ route('conference.admin') }}" class="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50">
             <svg fill="none" viewBox="0 0 22 22" stroke="currentColor" class="h-5 w-5">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18">

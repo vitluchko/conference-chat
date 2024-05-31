@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conference;
 use App\Models\Topic;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
@@ -19,7 +20,9 @@ class TopicsController extends Controller
     {
         $topics = Topic::where('conference_id', $conference_id)->get();
 
-        return view('admin.topic.index', compact('topics', 'conference_id'));
+        $isActiveConference = Conference::where('isActive', true)->exists();
+
+        return view('admin.topic.index', compact('topics', 'conference_id', 'isActiveConference'));
     }
 
     /**
@@ -68,18 +71,9 @@ class TopicsController extends Controller
             'conference_id' => $request->conference_id,
         ]);
 
-        return redirect()->route('topic', ['id' => $request->conference_id]);
-    }
+        $conference_id = $request->conference_id;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('topic.index', ['conference_id' => $conference_id]);
     }
 
     /**
@@ -91,9 +85,9 @@ class TopicsController extends Controller
     public function edit($id)
     {
         $topic = Topic::where('id', $id)
-        ->firstOrFail();
+            ->firstOrFail();
 
-    return view('admin.topic.edit', compact('topic'));
+        return view('admin.topic.edit', compact('topic'));
     }
 
     /**
@@ -139,7 +133,7 @@ class TopicsController extends Controller
         $topic->description = $request->description;
         $topic->save();
 
-        return redirect()->route('topic', ['id' => $request->conference_id]);
+        return redirect()->route('topic.index', ['conference_id' => $request->conference_id]);
     }
 
     /**
